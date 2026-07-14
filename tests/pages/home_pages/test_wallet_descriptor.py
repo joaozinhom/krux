@@ -1,4 +1,3 @@
-import pytest
 from ...shared_mocks import MockPrinter
 from .test_home import tdata, create_ctx
 from ...test_wallet import tdata as wallet_tdata

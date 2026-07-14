@@ -1,4 +1,3 @@
-import pytest
 from .test_home import tdata, create_ctx
 
 # fortdata.SINGLESIG_ACTION_KEY_TEST_P2WPKH
