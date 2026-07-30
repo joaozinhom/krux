@@ -1,6 +1,6 @@
-from ...shared_mocks import MockPrinter
-from .test_home import tdata, create_ctx
-from ...test_wallet import tdata as wallet_tdata
+from tests.shared_mocks import MockPrinter
+from tests.pages.home_pages.test_home import tdata, create_ctx
+from tests.test_wallet import tdata as wallet_tdata
 
 
 def test_wallet(mocker, m5stickv, tdata):

@@ -1,7 +1,7 @@
 import pytest
-from ...shared_mocks import MockPrinter
-from .. import create_ctx
-from ...test_psbt import tdata as psbt_tdata
+from tests.shared_mocks import MockPrinter
+from tests.pages import create_ctx
+from tests.test_psbt import tdata as psbt_tdata
 
 
 @pytest.fixture
@@ -744,7 +744,7 @@ def test_sign_psbt(mocker, m5stickv, tdata):
         B64_FILE_EXTENSION,
         SIGNED_FILE_SUFFIX,
     )
-    from ...shared_mocks import MockFile, mock_open
+    from tests.shared_mocks import MockFile, mock_open
 
     cases = [
         # Single-sig, not loaded, NO sign, Path mismatch, No print prompt

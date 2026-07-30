@@ -1,5 +1,5 @@
-from . import create_ctx
-from .home_pages.test_home import tdata
+from tests.pages import create_ctx
+from tests.pages.home_pages.test_home import tdata
 import pytest
 
 

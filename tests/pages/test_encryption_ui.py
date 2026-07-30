@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch
-from . import create_ctx
+from tests.pages import create_ctx
 
 TEST_KEY = "test key"
 CBC_WORDS = "dog guitar hotel random owner gadget salute riot patrol work advice panic erode leader pass cross section laundry elder asset soul scale immune scatter"

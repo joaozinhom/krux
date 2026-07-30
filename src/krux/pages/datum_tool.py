@@ -22,7 +22,7 @@
 
 import gc
 from krux.wdt import wdt
-from . import (
+from krux.pages import (
     Page,
     Menu,
     MENU_CONTINUE,
@@ -33,14 +33,14 @@ from . import (
     NUM_SPECIAL_1,
     NUM_SPECIAL_2,
 )
-from .encryption_ui import (
+from krux.pages.encryption_ui import (
     OVERRIDE_ITERATIONS,
     OVERRIDE_VERSION,
     OVERRIDE_LABEL,
 )
-from ..display import FONT_WIDTH, FONT_HEIGHT, DEFAULT_PADDING, TOTAL_LINES
-from ..krux_settings import t
-from ..input import (
+from krux.display import FONT_WIDTH, FONT_HEIGHT, DEFAULT_PADDING, TOTAL_LINES
+from krux.krux_settings import t
+from krux.input import (
     BUTTON_TOUCH,
     BUTTON_ENTER,
     FAST_FORWARD,
@@ -309,7 +309,7 @@ class DatumToolMenu(Page):
     def scan_qr(self):
         """Handler for the 'Scan a QR' menu item"""
 
-        from .qr_capture import QRCodeCapture
+        from krux.pages.qr_capture import QRCodeCapture
 
         qr_scanner = QRCodeCapture(self.ctx)
         contents, fmt = qr_scanner.qr_capture_loop()
@@ -334,7 +334,7 @@ class DatumToolMenu(Page):
 
     def text_entry(self):
         """Handler for the 'Text Entry' menu item"""
-        from .encryption_ui import prompt_for_text_update
+        from krux.pages.encryption_ui import prompt_for_text_update
 
         text = ""
         while True:
@@ -364,7 +364,7 @@ class DatumToolMenu(Page):
 
     def read_file(self):
         """Handler for the 'Read File' menu item"""
-        from .utils import Utils
+        from krux.pages.utils import Utils
 
         if not self.has_sd_card():
             self.flash_error(t("SD card not detected."))
@@ -416,8 +416,12 @@ class DatumTool(Page):
 
     def view_qr(self):
         """Reusable handler for viewing a QR code"""
-        from ..qr import QR_CAPACITY_BYTE, QR_CAPACITY_ALPHANUMERIC, QR_CAPACITY_NUMERIC
-        from ..bbqr import encode_bbqr
+        from krux.qr import (
+            QR_CAPACITY_BYTE,
+            QR_CAPACITY_ALPHANUMERIC,
+            QR_CAPACITY_NUMERIC,
+        )
+        from krux.bbqr import encode_bbqr
 
         # Helper function to check if character is alphanumeric
         def is_alnum(c):
@@ -431,8 +435,8 @@ class DatumTool(Page):
                 seedqrview_thresh = QR_CAPACITY_ALPHANUMERIC[STATIC_QR_MAX_SIZE]
 
         if len(self.contents) <= seedqrview_thresh:
-            from .encryption_ui import prompt_for_text_update
-            from .qr_view import SeedQRView
+            from krux.pages.encryption_ui import prompt_for_text_update
+            from krux.pages.qr_view import SeedQRView
 
             # for transcribable qr, allow updating title
             while True:
@@ -463,7 +467,7 @@ class DatumTool(Page):
             seed_qr_view.display_qr(**kvargs)
 
         else:
-            from ..qr import FORMAT_NONE, FORMAT_PMOFN, FORMAT_BBQR, FORMAT_UR
+            from krux.qr import FORMAT_NONE, FORMAT_PMOFN, FORMAT_BBQR, FORMAT_UR
 
             menu_opts = []
             if len(self.contents) <= seedqrview_thresh * 4:
@@ -532,7 +536,7 @@ class DatumTool(Page):
 
     def save_sd(self):
         """Reusable handler for saving to SD file"""
-        from .file_operations import SaveFile
+        from krux.pages.file_operations import SaveFile
 
         save_page = SaveFile(self.ctx)
         save_page.save_file(
@@ -591,8 +595,8 @@ class DatumTool(Page):
     def _show_contents(self):
         """Displays infobox and contents"""
         from binascii import hexlify
-        from ..settings import ELLIPSIS
-        from ..kboard import kboard
+        from krux.settings import ELLIPSIS
+        from krux.kboard import kboard
 
         page_indicator = "p.%d"
         max_lines = 0
@@ -709,7 +713,7 @@ class DatumTool(Page):
 
     def _decrypt_as_kef_envelope(self):
         """Assuming self.contents are encrypted, offer to decrypt"""
-        from .encryption_ui import KEFEnvelope
+        from krux.pages.encryption_ui import KEFEnvelope
         from binascii import hexlify
 
         while True:
@@ -794,7 +798,7 @@ class DatumTool(Page):
 
     def view_contents(self, try_decrypt=True, offer_convert=False):
         """allows to view, convert, encrypt/decrypt, and export short str/bytes contents"""
-        from .encryption_ui import KEFEnvelope
+        from krux.pages.encryption_ui import KEFEnvelope
 
         gc.collect()
 
