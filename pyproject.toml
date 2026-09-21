@@ -198,8 +198,8 @@ glyphs.ref = "update-glyphs"
 fonts.ref = "update-glyphs"
 
 # kapps tasks
-mpy = "./firmware/MaixPy/components/micropython/core/mpy-cross/mpy-cross"
-mpy-all = { shell = "for f in kapps/*.py; do poetry run poe mpy \"$f\"; done" }
+mpy = "python firmware/scripts/mpy_cross.py"
+mpy-all = "python firmware/scripts/mpy_cross.py kapps/*.py"
 # aliases
 mpy-cross.ref = "mpy"
 mpy-cross-all.ref = "mpy-all"

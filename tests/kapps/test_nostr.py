@@ -61,6 +61,25 @@ def test_nostrkey(mocker, m5stickv):
             nkey.load_nsec(t[NSEC].replace(NSEC, NPUB))
 
 
+def test_klogin_load_wallet_key(mocker, m5stickv):
+    from kapps import nostr
+    from krux.pages import MENU_EXIT
+
+    login = mocker.MagicMock()
+    load_mnemonic = mocker.patch.object(nostr.nostrKey, "load_mnemonic")
+    key = mocker.patch.object(nostr, "Key")
+    wallet = mocker.patch.object(nostr, "Wallet")
+    mnemonic = data()[0][nostr.MNEMONIC]
+
+    assert nostr.Klogin._load_wallet_key(login, mnemonic, True) == MENU_EXIT
+    load_mnemonic.assert_called_once_with(mnemonic)
+    key.assert_called_once_with(
+        mnemonic, nostr.TYPE_SINGLESIG, nostr.NETWORKS[nostr.MAIN_TXT]
+    )
+    wallet.assert_called_once_with(key.return_value)
+    assert login.ctx.wallet == wallet.return_value
+
+
 def test_nostrevent(mocker, m5stickv):
     from kapps.nostr import NostrEvent, NostrKey, MNEMONIC, HEX, NSEC
     import json
