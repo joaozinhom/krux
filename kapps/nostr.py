@@ -622,7 +622,7 @@ class Klogin(Login):
             back_label=None,
         )
 
-    def _load_wallet_key(self, mnemonic):
+    def _load_wallet_key(self, mnemonic, new=False):
         nostrKey.load_mnemonic(mnemonic)
         self.ctx.wallet = Wallet(Key(mnemonic, TYPE_SINGLESIG, NETWORKS[MAIN_TXT]))
 
