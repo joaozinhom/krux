@@ -334,6 +334,7 @@ translation_array = [
     "Kết quả bộ thử nghiệm",
     "Kiểm tra bài cũ:",
     "Văn bản",
+    "Phí ít nhất bằng số tiền thanh toán.",
     "Phí hiển thị có thể thấp hơn phí thực tế.",
     "Chủ đề",
     "Nhiệt",
