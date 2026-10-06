@@ -29,6 +29,22 @@ def test_init(mocker, m5stickv):
         sn.label("test")
 
 
+def test_load_startup_apps(mocker, m5stickv):
+    from krux.krux_settings import SecuritySettings
+
+    mocker.patch("builtins.open", mocker.mock_open(read_data='["nostr"]'))
+
+    assert SecuritySettings._load_startup_apps() == ["nostr", "none"]
+
+
+def test_load_startup_apps_without_file(mocker, m5stickv):
+    from krux.krux_settings import SecuritySettings
+
+    mocker.patch("builtins.open", side_effect=OSError)
+
+    assert SecuritySettings._load_startup_apps() == ["none"]
+
+
 def test_stored_i18n_settings(mocker, m5stickv):
     # mock store singleton creation before import
     stored_settings = """{"settings": {"i18n": {"locale": "pt-BR"}}}"""
