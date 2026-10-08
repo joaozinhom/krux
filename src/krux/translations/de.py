@@ -334,6 +334,7 @@ translation_array = [
     "Ergebnisse der Testsuite",
     "Test:",
     "Text",
+    "Die Gebühr entspricht mindestens dem Zahlungsbetrag.",
     "Die angezeigte Gebühr kann niedriger als die tatsächliche Gebühr sein.",
     "Thema",
     "Thermisch",

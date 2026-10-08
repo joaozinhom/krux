@@ -334,6 +334,7 @@ translation_array = [
     "Résultats de la suite de tests",
     "Test:",
     "Texte",
+    "Les frais sont au moins égaux au montant du paiement.",
     "Les frais affichés peuvent être inférieurs aux frais réels.",
     "Thème",
     "Thermique",
