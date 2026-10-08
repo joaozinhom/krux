@@ -58,6 +58,7 @@ class PSBTSigner:
         self.qr_format = qr_format
         self.policy = None
         self.is_b64_file = False
+        self.fee_is_at_least_payment = False
 
         # Parse the PSBT
         if psbt_filename:
@@ -445,6 +446,8 @@ class PSBTSigner:
             percent_base,
             output_policy_count,
         )
+        fee = inp_amount - self_amount - change_amount - spend_amount
+        self.fee_is_at_least_payment = 0 < spend_amount <= fee
 
         messages = []
         # first screen - resume

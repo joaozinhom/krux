@@ -334,6 +334,7 @@ translation_array = [
     "Test Paketi Sonuçları",
     "Test:",
     "Metin",
+    "Ücret, ödeme tutarına eşit veya daha fazladır.",
     "Gösterilen ücret gerçek ücretten düşük olabilir.",
     "Tema",
     "Termal",

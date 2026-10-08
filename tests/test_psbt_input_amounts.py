@@ -189,6 +189,33 @@ def test_accepts_zero_fee(m5stickv):
     assert isinstance(signer, PSBTSigner)
 
 
+def test_fee_equal_to_payment_is_flagged(m5stickv):
+    """The stronger fee warning includes the exact equality boundary"""
+    from krux.psbt import PSBTSigner
+    from krux.qr import FORMAT_NONE
+
+    root = _root()
+    signer = PSBTSigner(_wallet(), _segwit_psbt(root, 200000, 100000), FORMAT_NONE)
+
+    signer.outputs()
+
+    assert signer.fee_is_at_least_payment is True
+
+
+def test_fee_below_payment_is_not_flagged(m5stickv):
+    """A rounded 100% fee does not trigger the stronger warning"""
+    from krux.psbt import PSBTSigner
+    from krux.qr import FORMAT_NONE
+
+    root = _root()
+    signer = PSBTSigner(_wallet(), _segwit_psbt(root, 199999, 100000), FORMAT_NONE)
+
+    _, fee_percent = signer.outputs()
+
+    assert fee_percent == 100.0
+    assert signer.fee_is_at_least_payment is False
+
+
 def _compressed_psbt_with_contradicting_amounts(root, real_value, declared_value):
     """Builds a PSBT that forces the compressed parse and lies in witness_utxo.
 

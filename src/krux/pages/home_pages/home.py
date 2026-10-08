@@ -432,8 +432,21 @@ class Home(Page):
 
         return True
 
-    def _fees_psbt_warn(self, fee_percent):
-        """Warn if fees greater than 10% of what is spent"""
+    def _fees_psbt_warn(self, fee_percent, fee_is_at_least_payment=False):
+        """Warn if fees are at least the payment or 10% of the amount sent"""
+        if fee_is_at_least_payment:
+            self.ctx.display.clear()
+            self.ctx.display.draw_centered_text(
+                t("Warning:")
+                + " "
+                + t("High fees!")
+                + "\n"
+                + t("The fee is at least the payment amount."),
+                highlight_prefix=":",
+            )
+
+            return self.prompt(t("Proceed?"), BOTTOM_PROMPT_LINE)
+
         if fee_percent >= 10.0:
             self.ctx.display.clear()
             self.ctx.display.draw_centered_text(
@@ -532,7 +545,7 @@ class Home(Page):
         if not self._unverified_amounts_psbt_warn(signer):
             return MENU_CONTINUE
 
-        if not self._fees_psbt_warn(fee_percent):
+        if not self._fees_psbt_warn(fee_percent, signer.fee_is_at_least_payment):
             return MENU_CONTINUE
 
         self._display_transaction_for_review(outputs)
