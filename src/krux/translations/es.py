@@ -334,6 +334,7 @@ translation_array = [
     "Resultados de la suite de pruebas",
     "Prueba:",
     "Texto",
+    "La comisión es al menos igual al monto del pago.",
     "La comisión mostrada puede ser menor que la comisión real.",
     "Tema",
     "Térmico",

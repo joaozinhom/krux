@@ -334,6 +334,7 @@ translation_array = [
     "Test Suite-resultaten",
     "Test:",
     "Tekst",
+    "De kosten zijn minstens gelijk aan het betaalbedrag.",
     "Het getoonde tarief kan lager zijn dan het werkelijke tarief.",
     "Thema",
     "Thermisch",

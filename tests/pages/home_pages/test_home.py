@@ -1782,7 +1782,8 @@ def test_cancel_sign_high_fee(mocker, m5stickv, tdata):
             ),
             mocker.call("Processing…"),
             mocker.call(
-                "Warning: High fees!\n799.7% of the amount.", highlight_prefix=":"
+                "Warning: High fees!\nThe fee is at least the payment amount.",
+                highlight_prefix=":",
             ),
         ]
     )
@@ -1835,7 +1836,8 @@ def test_sign_high_fee(mocker, m5stickv, tdata):
             ),
             mocker.call("Processing…"),
             mocker.call(
-                "Warning: High fees!\n799.7% of the amount.", highlight_prefix=":"
+                "Warning: High fees!\nThe fee is at least the payment amount.",
+                highlight_prefix=":",
             ),
         ]
     )
@@ -1890,7 +1892,8 @@ def test_sign_self(mocker, m5stickv, tdata):
             ),
             mocker.call("Processing…"),
             mocker.call(
-                "Warning: High fees!\n799.7% of the amount.", highlight_prefix=":"
+                "Warning: High fees!\nThe fee is at least the payment amount.",
+                highlight_prefix=":",
             ),
         ]
     )
@@ -1946,7 +1949,8 @@ def test_sign_spent_and_self(mocker, m5stickv, tdata):
             ),
             mocker.call("Processing…"),
             mocker.call(
-                "Warning: High fees!\n235.9% of the amount.", highlight_prefix=":"
+                "Warning: High fees!\nThe fee is at least the payment amount.",
+                highlight_prefix=":",
             ),
         ]
     )
@@ -1984,6 +1988,21 @@ def test_unverified_amounts_warning(mocker, m5stickv):
     mocker.spy(ctx.display, "draw_centered_text")
     assert home._unverified_amounts_psbt_warn(FakeSigner(False)) is True
     assert ctx.display.draw_centered_text.call_count == 0
+
+
+def test_fee_at_least_payment_warning(mocker, m5stickv):
+    """A fee at least as large as the payment gets the stronger warning"""
+    from krux.pages.home_pages.home import Home
+    from krux.input import BUTTON_PAGE
+
+    ctx = create_ctx(mocker, [BUTTON_PAGE])
+    home = Home(ctx)
+
+    assert home._fees_psbt_warn(100.0, True) is False
+    ctx.display.draw_centered_text.assert_called_once_with(
+        "Warning: High fees!\nThe fee is at least the payment amount.",
+        highlight_prefix=":",
+    )
 
 
 def test_load_sign_psbt_camera_back_is_silent(mocker, amigo, tdata):
