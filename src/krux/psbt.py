@@ -58,6 +58,7 @@ class PSBTSigner:
         self.qr_format = qr_format
         self.policy = None
         self.is_b64_file = False
+        self.fee_is_at_least_payment = False
 
         # Parse the PSBT
         if psbt_filename:
@@ -433,9 +434,11 @@ class PSBTSigner:
                 + "\n\n"
             )
 
+        out_amount = self_amount + change_amount + spend_amount
         resume_fee_str, fee_percent = self._get_resume_fee(
-            inp_amount, self_amount + change_amount + spend_amount, output_policy_count
+            inp_amount, out_amount, output_policy_count
         )
+        self.fee_is_at_least_payment = 0 < spend_amount <= inp_amount - out_amount
 
         messages = []
         # first screen - resume

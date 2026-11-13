@@ -334,6 +334,7 @@ translation_array = [
     "Resultados da suíte de testes",
     "Teste:",
     "Texto",
+    "A taxa é igual ou superior ao valor do pagamento.",
     "A taxa exibida pode ser menor que a taxa real.",
     "Tema",
     "Térmica",
